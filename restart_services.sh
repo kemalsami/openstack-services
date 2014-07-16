@@ -33,20 +33,22 @@ done
 ###########################################
 ###########################################
 ##
-## --2-- 
+## --2-- MAIN OPERATIONs 
 ##
 ###########################################
 ###########################################
 cd /etc/init.d/ ;
 
+SERVICE=$(echo $SERVICE | tr '[:upper:]' '[:lower:]')
 
-for i in $(ls neutron-*);
-do service $i $OPERATION
-done
-
-for i in $(ls nova-*);
-do service $i $OPERATION
-done
+if [ $SERVICE != "all" ]; then
+	SERVICE=$SERVICE"*"
+	for i in $(ls $SERVICE);
+		do service $i $OPERATION
+	done
+else
+	echo "all services return its operation"
+fi
 
 ###########################################
 ###########################################
